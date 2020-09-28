@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathmatics_quiz/models/categories.dart';
+import 'package:mathmatics_quiz/models/level.dart';
 import 'package:provider/provider.dart';
 
 import './screens/homepage.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Categories(),
         ),
+        ChangeNotifierProvider.value(
+          value: Level(),
+        ),        
       ],
       child: MaterialApp(
         

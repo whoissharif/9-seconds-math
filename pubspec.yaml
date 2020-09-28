@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   provider: ^4.3.2+1
   intl: ^0.16.1
+  #catex: ^0.0.1+6
   # shared_preferences: ^0.5.8
   # google_fonts: ^1.1.0
 

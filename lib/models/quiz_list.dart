@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import './quiz.dart';
 
 class QuizList with ChangeNotifier {
@@ -8,16 +7,17 @@ class QuizList with ChangeNotifier {
       id: 'q1',
       cid: 'c1',
       level: 1,
-      question: '4 x (2 + 3)',
+      question: "10\u{207B}\u{2076}",//10^-6
       answers: ['24', '11', '14'],
       rightAnser: '24',
       complexity: Complexity.basic,
+      
     ),
     Quiz(
       id: 'q2',
       cid: 'c1',
       level: 1,
-      question: '4 x (2 + 3)',
+      question: "9 \u{00F7} 3",//mul
       answers: ['24', '11', '14'],
       rightAnser: '24',
       complexity: Complexity.basic,
@@ -26,7 +26,7 @@ class QuizList with ChangeNotifier {
       id: 'q3',
       cid: 'c1',
       level: 1,
-      question: '4 x (2 + 3)',
+      question: '4 \u{00D7} (2 + 3)',//div
       answers: ['24', '11', '14'],
       rightAnser: '24',
       complexity: Complexity.basic,
@@ -35,7 +35,7 @@ class QuizList with ChangeNotifier {
       id: 'q4',
       cid: 'c1',
       level: 1,
-      question: '4 x (2 + 3)',
+      question: '4 \u33D2 (2 + 3)',//log
       answers: ['24', '11', '14'],
       rightAnser: '24',
       complexity: Complexity.basic,

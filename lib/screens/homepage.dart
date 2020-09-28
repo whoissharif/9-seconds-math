@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mathmatics_quiz/constant.dart';
-import 'package:mathmatics_quiz/models/categories.dart';
-import 'package:mathmatics_quiz/models/quiz_list.dart';
-import 'package:mathmatics_quiz/screens/levels_page.dart';
 import 'package:provider/provider.dart';
 
-class Homepage extends StatelessWidget {
-  // List<String> cName = ['Beginer', 'Intermediate', 'Advanced'];
-  Widget _buildItemButton(String name, Function onBtnTap) {
-    return GestureDetector(
-      onTap: onBtnTap,
-      child: Container(
-        height: 70,
-        alignment: Alignment.center,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.deepOrange, borderRadius: BorderRadius.circular(10)),
-        child: Text(
-          name,
-          style: kCategoryButtonTextStyle,
-        ),
-      ),
-    );
-  }
+import '../constant.dart';
+import '../models/categories.dart';
+import '../screens/levels_page.dart';
 
+class Homepage extends StatefulWidget {
+  @override
+  _HomepageState createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    // final quiz = Provider.of<QuizList>(context);
     final cat = Provider.of<Categories>(context);
     return Scaffold(
       body: Column(
@@ -36,22 +21,16 @@ class Homepage extends StatelessWidget {
             flex: 2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              // alignment: Alignment.center,
-              // child:
               children: <Widget>[
                 Text(
                   'Play and',
                   style: TextStyle(
-                      fontSize: 20,
-                      letterSpacing: 1,
-                      color: Colors.deepOrange),
+                      fontSize: 20, letterSpacing: 1, color: Colors.deepOrange),
                 ),
                 Text(
                   'Boost Your Brain',
                   style: TextStyle(
-                      fontSize: 20,
-                      letterSpacing: 1,
-                      color: Colors.deepOrange),
+                      fontSize: 20, letterSpacing: 1, color: Colors.deepOrange),
                 ),
               ],
             ),
@@ -59,18 +38,60 @@ class Homepage extends StatelessWidget {
           Container(
             height: 330,
             child: ListView.builder(
-                itemCount: cat.items.length,
-                itemBuilder: (context, index) =>
-                    _buildItemButton(cat.items[index].name, () {
-                      Navigator.pushNamed(
-                        context,
-                        LevelsPage.routeName,
-                        arguments: [
-                          cat.items[index].id,
+              itemCount: cat.items.length,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: cat.items[index].isLocked == false
+                    ? () {
+                        Navigator.pushNamed(
+                          context,
+                          LevelsPage.routeName,
+                          arguments: [
+                            cat.items[index].id,
+                            cat.items[index].name,
+                          ],
+                        ).then((value) {
+                          if (value == true) {
+                            setState(() {
+                              //checking if the previous category is complete or not
+                              if (cat.items[index].levelList[4].isLocked ==
+                                  false) {
+                                cat.items[index + 1].isLocked = false;
+                              }
+                            });
+                          }
+                        });
+                      }
+                    : null,
+                child: Container(
+                    height: 70,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.deepOrange,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          width: 10,
+                          height: 10,
+                        ),
+                        Text(
                           cat.items[index].name,
-                        ],
-                      );
-                    })),
+                          style: kCategoryButtonTextStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        Icon(
+                          cat.items[index].isLocked == false
+                              ? Icons.play_arrow
+                              : Icons.lock,
+                          color: Colors.white,
+                        )
+                      ],
+                    )),
+              ),
+            ),
           ),
         ],
       ),
